@@ -1,4 +1,6 @@
-export function Species({ name, language, averageLifespan }) {
+import React from 'react';
+
+const Species = ({ name, language, averageLifespan }) => {
   return (
     <li>
       {name}
@@ -9,3 +11,5 @@ export function Species({ name, language, averageLifespan }) {
     </li>
   );
 }
+
+export default Species

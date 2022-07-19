@@ -1,3 +1,4 @@
+import React from 'react';
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import "./App.css";
@@ -11,7 +12,7 @@ function App() {
     <div className="App">
       <h1>Infinite SWAPI</h1>
       <QueryClientProvider client={clientQuery}>
-      <InfinitePeople />
+      {/* <InfinitePeople /> */}
       <InfiniteSpecies />
       </QueryClientProvider>
     </div>

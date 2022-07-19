@@ -1,37 +1,54 @@
+import React from 'react';
 import InfiniteScroll from "react-infinite-scroller";
 import { useInfiniteQuery } from "react-query";
 
-import { Species } from "./Species";
+import Species from "./Species";
 
-const initialUrl = "https://swapi.dev/api/species/";
-const fetchUrl = async (url) => {
-  const response = await fetch(url);
-  return response.json();
-};
 
 export function InfiniteSpecies() {
+  // const {
+  //   data,
+  //   isLoading,
+  //   fetchNextPage,
+  //   hasNextPage,
+  //   isFetching,
+  //   isError,
+  //   error,
+  // } = useInfiniteQuery(
+  //   "sw-species",
+  //   fetchUrl,
+  //   {
+  //     getNextPageParam: (lastPage) => lastPage.next || undefined,
+  //   }
+  // );
+
+
+const initialUrl = "https://swapi.dev/api/species/";
+  const fetchUrl = async ({ pageParam = initialUrl }) => {
+    const response = await fetch(pageParam);
+    console.log('respponse', response);
+    return response.json();
+  };
+
   const {
     data,
+    isLoading,
     fetchNextPage,
     hasNextPage,
-    isLoading,
-    isFetching,
+    isFetchingNextPage,
     isError,
-    error,
-  } = useInfiniteQuery(
-    "sw-species",
-    ({ pageParam = initialUrl }) => fetchUrl(pageParam),
-    {
-      getNextPageParam: (lastPage) => lastPage.next || undefined,
-    }
-  );
+    error
+  } = useInfiniteQuery( "sw-species",
+  fetchUrl, {
+    getNextPageParam: (lastPage) => lastPage.nextPage
+  });
 
   if (isLoading) return <div className="loading">Loading...</div>;
   if (isError) return <div>Error! {error.toString()}</div>;
 
   return (
     <>
-      {isFetching && <div className="loading">Loading...</div>}
+      {isFetchingNextPage && <div className="loading">Loading...</div>}
       <InfiniteScroll loadMore={fetchNextPage} hasMore={hasNextPage}>
         {data.pages.map((pageData) => {
           return pageData.results.map((species) => {

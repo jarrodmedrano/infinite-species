@@ -1,3 +1,5 @@
+import React from 'react';
+
 export function Person({ name, hairColor, eyeColor }) {
   return (
     <li>
